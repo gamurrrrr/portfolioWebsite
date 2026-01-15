@@ -24,17 +24,17 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+<body class="bg-amber-50 text-gray-800 font-sans leading-relaxed">
 
     <custom-navbar></custom-navbar>
 
-    <main class="container mx-auto px-4 py-12 max-w-5xl">
+    <main class="container mx-auto px-4 py-12 max-w-9xl">
         
         <a href="index.html" class="inline-flex items-center text-primary-700 hover:text-primary-900 mb-8 font-medium transition-colors">
             <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i> Back to Portfolio
         </a>
 
-        <header class="mb-12 border-b pb-12">
+        <header class="mb-12 border-b border-gray-200 pb-12">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
                     <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
@@ -87,7 +87,7 @@
                     <strong>Insight:</strong> While Kelowna shipped the highest volume, Toronto was the superior performer because it achieved similar results while holding significantly less stock.
                 </p>
             </div>
-            <div class="bg-white p-4 rounded-xl shadow-md border">
+            <div class="bg-white p-4 rounded-xl shadow-md border border-gray-100">
                 <img src="images/efficiency.png" alt="Chart showing Toronto Warehouse Efficiency Score of 0.042 compared to others" class="w-full h-auto rounded">
                 <p class="text-sm text-gray-500 mt-2 italic text-center">Figure 1: Toronto outperforms in efficiency vs. inventory held.</p>
             </div>
@@ -113,7 +113,7 @@
                         </ul>
                     </div>
                     <div>
-                        <img src="images/inventory.png" alt="Bar chart showing supply vs demand gaps" class="w-full h-auto rounded border">
+                        <img src="images/inventory.png" alt="Bar chart showing supply vs demand gaps" class="w-full h-auto rounded border border-gray-100">
                     </div>
                 </div>
             </div>
@@ -147,7 +147,177 @@
             </div>
         </section>
 
-        <section class="mb-20 bg-primary-50 p-8 rounded-2xl">
+        <section class="mb-24">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                <i data-feather="cpu" class="text-primary-600 mr-3"></i> Technical Implementation
+            </h2>
+            
+            <div class="mb-16">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 border-l-4 border-blue-500 pl-3">
+                    1. Complex Data Aggregation (SQL)
+                </h3>
+                <div class="bg-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-800">
+                    <div class="bg-gray-800 px-4 py-2 flex justify-between items-center border-b border-gray-700">
+                        <span class="text-gray-300 text-xs font-mono">sql_warehouse_efficiency.sql</span>
+                        <div class="flex gap-1.5">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                    </div>
+                    <div class="p-6 overflow-x-auto">
+                        <pre class="text-sm font-mono leading-relaxed text-blue-300">
+<span class="text-purple-400">SELECT</span> 
+    s.warehouseId, 
+    w.warehouseName, 
+    <span class="text-yellow-300">SUM</span>(op.quantity) <span class="text-purple-400">AS</span> totalShipped
+<span class="text-purple-400">FROM</span> shipment s
+<span class="text-purple-400">JOIN</span> warehouse w <span class="text-purple-400">ON</span> w.warehouseId = s.warehouseId
+<span class="text-purple-400">JOIN</span> ordersummary os <span class="text-purple-400">ON</span> os.shipmentId = s.shipmentId
+<span class="text-purple-400">JOIN</span> orderproduct op <span class="text-purple-400">ON</span> op.orderId = os.orderId
+<span class="text-purple-400">GROUP BY</span> s.warehouseId, w.warehouseName
+<span class="text-purple-400">ORDER BY</span> totalShipped <span class="text-purple-400">DESC</span>;</pre>
+                        <div class="mt-4 pt-4 border-t border-gray-700">
+                            <p class="text-gray-400 text-xs leading-relaxed">
+                                <strong class="text-gray-200">Context:</strong> To calculate the "Efficiency Score," I aggregated data from three distinct tables. This query isolates the <strong>Throughput Velocity</strong> by joining shipment logs with order details.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-gray-800 mb-6 border-l-4 border-green-500 pl-3">
+                2. Excel Logic & Forecasting
+            </h3>
+
+            <div class="grid md:grid-cols-2 gap-8 items-center mb-12">
+                <div class="order-2 md:order-1">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-100 p-2 rounded text-green-700 mr-3">
+                                <i data-feather="trending-up" class="w-5 h-5"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-900">Linear Forecasting Model</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+                            To predict 2024 revenue, I utilized the <code>FORECAST.LINEAR</code> algorithm based on the absolute year-over-year performance between 2022 and 2023. This model identified that while major payment methods are declining, niche methods are collapsing entirely.
+                        </p>
+                        <code class="block bg-gray-50 p-3 rounded text-xs text-gray-700 font-mono border border-gray-200">
+                            =FORECAST.LINEAR(2024, B2:F2, {2019,2020...})
+                        </code>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 bg-white p-2 rounded-xl shadow-md border border-gray-200">
+                    <img src="images/excel-linear.png" alt="Excel chart showing linear revenue trend lines" class="w-full h-auto rounded border border-gray-100">
+                    <p class="text-center text-xs text-gray-400 mt-2">
+                        Figure 2: Linear trend lines predicting 2024 revenue decline.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white p-2 rounded-xl shadow-md border border-gray-200">
+                    <img src="images/excel-forecast.png" alt="Excel screenshot showing the zero-floor constraint logic" class="w-full h-auto rounded border border-gray-100">
+                    <p class="text-center text-xs text-gray-400 mt-2">
+                        Figure 3: Manual data cleaning to prevent negative revenue predictions.
+                    </p>
+                </div>
+                
+                <div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 p-2 rounded text-blue-700 mr-3">
+                                <i data-feather="shield" class="w-5 h-5"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-900">The "Zero-Floor" Constraint</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+                            <strong>Challenge:</strong> The rapid decline of ApplePay usage caused the linear model to predict <em>negative revenue</em> for 2024, which is a statistical anomaly.
+                        </p>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            <strong>Solution:</strong> I applied a logic constraint to floor values at $0. This manually corrects the algorithm to reflect the business reality that a payment method effectively becomes obsolete rather than costing revenue.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h3 class="text-xl font-bold text-gray-900 mb-6 pl-2 border-l-4 border-primary-500">
+                Advanced Data Transformation
+            </h3>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-5 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                        <h4 class="font-bold text-gray-800 flex items-center">
+                            <i data-feather="database" class="w-4 h-4 mr-2 text-primary-600"></i>
+                            Identifying "Dead Stock"
+                        </h4>
+                        <span class="text-xs font-mono bg-gray-200 px-2 py-1 rounded text-gray-600">SQL: LEFT JOIN</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-sm text-gray-600 mb-4">
+                            <strong>Problem:</strong> Standard queries filter out products with zero sales. We needed to specifically identify these non-performers to liquidate them.
+                        </p>
+                        <div class="bg-gray-900 rounded p-4 overflow-x-auto mb-4">
+<pre class="text-xs font-mono leading-relaxed text-blue-300">
+<span class="text-purple-400">SELECT</span> 
+    c.categoryName,
+    <span class="text-gray-400">-- Handle NULLs for items with 0 sales</span>
+    <span class="text-yellow-300">COALESCE</span>(<span class="text-yellow-300">SUM</span>(op.quantity), <span class="text-green-400">0</span>) <span class="text-purple-400">AS</span> totalSold
+<span class="text-purple-400">FROM</span> product p
+<span class="text-purple-400">JOIN</span> category c <span class="text-purple-400">ON</span> p.categoryId = c.categoryId
+<span class="text-purple-400">JOIN</span> productinventory pi <span class="text-purple-400">ON</span> p.productId = pi.productId
+<span class="text-gray-400">-- Keep products even if they have no order history</span>
+<span class="text-purple-400">LEFT JOIN</span> orderProduct op 
+    <span class="text-purple-400">ON</span> p.productId = op.productId
+<span class="text-purple-400">GROUP BY</span> c.categoryName
+<span class="text-purple-400">ORDER BY</span> totalInStock <span class="text-purple-400">DESC</span>;</pre>
+                        </div>
+                        <p class="text-xs text-gray-500 italic">
+                            Used <code>LEFT JOIN</code> to ensure unsold inventory remained in the dataset, and <code>COALESCE</code> to format null values as 0 for accurate calculation.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-5 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                        <h4 class="font-bold text-gray-800 flex items-center">
+                            <i data-feather="layers" class="w-4 h-4 mr-2 text-primary-600"></i>
+                            Customer Segmentation
+                        </h4>
+                        <span class="text-xs font-mono bg-gray-200 px-2 py-1 rounded text-gray-600">SQL: Subquery</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-sm text-gray-600 mb-4">
+                            <strong>Problem:</strong> Linking orders to payment methods required deduplicating customer records to find their primary card.
+                        </p>
+                        <div class="bg-gray-900 rounded p-4 overflow-x-auto mb-4">
+<pre class="text-xs font-mono leading-relaxed text-blue-300">
+<span class="text-purple-400">FROM</span> orderSummary o
+<span class="text-purple-400">JOIN</span> shipment s <span class="text-purple-400">ON</span> o.shipmentId = s.shipmentId
+<span class="text-gray-400">-- Derived table to isolate default payment</span>
+<span class="text-purple-400">JOIN</span> (
+    <span class="text-purple-400">SELECT</span> 
+        customerId, 
+        <span class="text-yellow-300">MIN</span>(paymentMethodId) <span class="text-purple-400">AS</span> defaultId
+    <span class="text-purple-400">FROM</span> paymentMethod
+    <span class="text-purple-400">GROUP BY</span> customerId
+) customer_card 
+<span class="text-purple-400">ON</span> o.customerId = customer_card.customerId</pre>
+                        </div>
+                        <p class="text-xs text-gray-500 italic">
+                            Utilized a derived table (Subquery) within the JOIN statement to pre-aggregate customer payment data before linking it to transaction history.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mb-20 bg-primary-50 p-8 rounded-2xl border border-primary-100">
             <h2 class="text-2xl font-bold text-primary-900 mb-6">Strategic Recommendations</h2>
             <div class="space-y-6">
                 <div class="flex gap-4">
