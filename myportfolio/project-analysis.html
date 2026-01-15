@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Chain Analysis | Gamu Mhere</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac',
+                            400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d',
+                            800: '#166534', 900: '#14532d', 950: '#052e16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+    <custom-navbar></custom-navbar>
+
+    <main class="container mx-auto px-4 py-12 max-w-5xl">
+        
+        <a href="index.html" class="inline-flex items-center text-primary-700 hover:text-primary-900 mb-8 font-medium transition-colors">
+            <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i> Back to Portfolio
+        </a>
+
+        <header class="mb-12 border-b pb-12">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
+                        Supply Chain & Operations Analysis
+                    </h1>
+                    <p class="text-xl text-gray-600 max-w-2xl">
+                        Optimizing warehouse efficiency and forecasting 2024 revenue trends using SQL and Statistical Analysis.
+                    </p>
+                </div>
+                <a href="Operational_Analysis_Report.pdf" target="_blank" class="flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition shadow-md">
+                    <i data-feather="download"></i>
+                    View Full PDF
+                </a>
+            </div>
+            
+            <div class="flex flex-wrap gap-3 mt-6">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">SQL</span>
+                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Excel Forecasting</span>
+                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Process Optimization</span>
+            </div>
+        </header>
+
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                <i data-feather="activity" class="text-primary-600 mr-3"></i> Executive Summary
+            </h2>
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-gray-700 mb-4">
+                    The objective of this project was to analyze operational data across four key pillars: Warehouse Efficiency, Inventory Health, Financial Trends, and Seasonal Demand. By analyzing 4 years of historical data, I identified critical cost-saving opportunities for the 2024 fiscal year.
+                </p>
+                <p class="text-gray-700 font-semibold">Key Recommendations:</p>
+                <ul class="list-disc list-inside space-y-2 mt-2 text-gray-700 ml-4">
+                    <li><strong>Standardize the "Toronto Model":</strong> Toronto achieved the highest efficiency score (0.042), outperforming Kelowna and Winnipeg.</li>
+                    <li><strong>Liquidate Dead Stock:</strong> Immediate clearance required for stagnant Technology and Household inventory.</li>
+                    <li><strong>Implement Flex Staffing:</strong> Historical data predicts surges in May and September, requiring temporary staffing to handle throughput.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mb-16 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">1. Benchmarking Warehouse Efficiency</h3>
+                <p class="text-gray-700 mb-4">
+                    To determine which facility was performing best, I created a custom <strong>Warehouse Efficiency Score</strong>. This metric balances shipping volume against total inventory held.
+                </p>
+                <div class="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm mb-4">
+                    Efficiency = (Total Shipped / Shipping Days) / Total Inventory
+                </div>
+                <p class="text-gray-700">
+                    <strong>Insight:</strong> While Kelowna shipped the highest volume, Toronto was the superior performer because it achieved similar results while holding significantly less stock.
+                </p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-md border">
+                <img src="images/efficiency.png" alt="Chart showing Toronto Warehouse Efficiency Score of 0.042 compared to others" class="w-full h-auto rounded">
+                <p class="text-sm text-gray-500 mt-2 italic text-center">Figure 1: Toronto outperforms in efficiency vs. inventory held.</p>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">2. Supply vs. Demand Analysis</h3>
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <p class="text-gray-700 mb-4">
+                            I identified a significant "Supply-Demand Gap" in specific categories. By comparing Total In Stock vs. Total Sold, I calculated a Sell-Through Rate to identify high-risk assets.
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i data-feather="alert-triangle" class="text-red-500 w-5 h-5 mt-1 mr-2"></i>
+                                <span><strong>Problem:</strong> Technology and Household categories have high stock levels but critically low sell-through rates.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="check-circle" class="text-green-500 w-5 h-5 mt-1 mr-2"></i>
+                                <span><strong>Opportunity:</strong> Media is a strong performer that is currently under-prioritized in inventory planning.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <img src="images/inventory.png" alt="Bar chart showing supply vs demand gaps" class="w-full h-auto rounded border">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">3. Financial Forecasting (2024)</h3>
+            <p class="text-gray-700 mb-4 max-w-3xl">
+                Using a linear trend model based on year-over-year performance (2022-2023), I forecasted revenue streams for the upcoming fiscal year.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-red-500">
+                    <h4 class="font-bold text-lg mb-2">Risk Alert</h4>
+                    <p class="text-gray-600 text-sm">
+                        Niche payment methods (ApplePay and AMEX) are projected to reach near-zero usage in 2024.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-primary-500">
+                    <h4 class="font-bold text-lg mb-2">Growth Spot</h4>
+                    <p class="text-gray-600 text-sm">
+                        While most provinces are flat, British Columbia shows signs of significant sales growth based on historical trends.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-blue-500">
+                    <h4 class="font-bold text-lg mb-2">Seasonality</h4>
+                    <p class="text-gray-600 text-sm">
+                        Revenue predictably surges in May and September, with deep slumps in February, dictating our staffing strategy.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20 bg-primary-50 p-8 rounded-2xl">
+            <h2 class="text-2xl font-bold text-primary-900 mb-6">Strategic Recommendations</h2>
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <div class="bg-white p-3 rounded-full h-12 w-12 flex items-center justify-center shrink-0 text-primary-600 font-bold shadow-sm">1</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-900">Rationalize Financial Overheads</h4>
+                        <p class="text-gray-700">Phase out ApplePay and AMEX support to eliminate unnecessary merchant fees and administrative maintenance.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="bg-white p-3 rounded-full h-12 w-12 flex items-center justify-center shrink-0 text-primary-600 font-bold shadow-sm">2</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-900">Implement Dynamic Resourcing</h4>
+                        <p class="text-gray-700">Move away from static hiring. Onboard temporary staff in April to prepare for the May peak, and reduce hours during the February slump.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="bg-white p-3 rounded-full h-12 w-12 flex items-center justify-center shrink-0 text-primary-600 font-bold shadow-sm">3</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-900">Optimize Warehouse Operations</h4>
+                        <p class="text-gray-700">Audit Toronto's workflow and implement their staffing and layout procedures at the underperforming Kelowna and Winnipeg locations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+    <script>feather.replace();</script>
+</body>
+</html>
